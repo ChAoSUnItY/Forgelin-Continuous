@@ -18,8 +18,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'kotlin'
 
 group = 'io.github.chaos'
-version = '1.4.30.0'
-archivesBaseName = 'Forgelin'
+version = '1.4.30.1'
+archivesBaseName = 'Forgelin-Continuous'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 

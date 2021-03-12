@@ -1,11 +1,11 @@
 [
   {
-    "modid": "Forgelin",
-    "name": "Forgelin",
+    "modid": "forgelin_continuous",
+    "name": "Forgelin Continuous",
     "description": "Stand with Kotlin!",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/ChAoSUnItY/Forgelin",
+    "url": "https://github.com/ChAoSUnItY/Forgelin-Continuous",
     "updateUrl": "",
     "authorList": [
       "ChAoS_UnItY",
