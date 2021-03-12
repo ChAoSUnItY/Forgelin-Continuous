@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-  compile group: "io.github.chaos", name: "Forgelin", version: "LATEST_VERSION"
+  compile 'com.github.ChAoSUnItY:Forgelin:LATEST_VERSION'
 }
 ```
 
