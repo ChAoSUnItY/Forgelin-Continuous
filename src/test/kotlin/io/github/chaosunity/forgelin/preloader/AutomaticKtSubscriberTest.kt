@@ -1,4 +1,4 @@
-package io.github.chaos.forgelin.preloader
+package io.github.chaosunity.forgelin.preloader
 
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.fml.common.Mod

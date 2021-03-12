@@ -1,4 +1,4 @@
-package io.github.chaos.forgelin
+package io.github.chaosunity.forgelin
 
 import net.minecraftforge.fml.common.FMLModContainer
 import net.minecraftforge.fml.common.ILanguageAdapter

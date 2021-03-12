@@ -1,4 +1,4 @@
-package io.github.chaos.forgelin
+package io.github.chaosunity.forgelin
 
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Loader
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 object Forgelin {
     const val MOD_ID = "forgelin_continuous"
     const val MOD_NAME = "Forgelin Continuous"
-    const val MOD_VERSION = "1.4.30.1"
+    const val MOD_VERSION = "1.4.30.2"
 
     @Mod.EventHandler
     fun onPreInit(event: FMLPreInitializationEvent) {

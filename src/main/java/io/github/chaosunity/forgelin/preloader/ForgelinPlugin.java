@@ -1,4 +1,4 @@
-package io.github.chaos.forgelin.preloader;
+package io.github.chaosunity.forgelin.preloader;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
