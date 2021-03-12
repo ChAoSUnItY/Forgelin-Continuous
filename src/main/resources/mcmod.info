@@ -1,0 +1,19 @@
+[
+  {
+    "modid": "Forgelin",
+    "name": "Forgelin",
+    "description": "Stand with Kotlin!",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "ChAoS_UnItY",
+      "shadowfacts"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
