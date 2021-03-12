@@ -7,7 +7,6 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: kotlin_version
-        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-serialization', version: kotlin_version
     }
 }
 
@@ -62,6 +61,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -74,21 +74,20 @@ dependencies {
     compile group: "org.jetbrains", name: "annotations", version: annotations_version
     compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
     compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-serialization", version: kotlin_version
     compile group: "org.jetbrains.kotlinx", name: "kotlinx-serialization-json", version: json_serialization_version
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "forgelin",
-                "Specification-Vendor"    : "ChAoS_UnItY, shadowfacts",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.version,
-                "Implementation-Vendor"   : "ChAoS_UnItY, shadowfacts",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "FMLCorePlugin": "io.github.chaos.forgelin.preloader.ForgelinPlugin",
+                "Specification-Title"        : "forgelin",
+                "Specification-Vendor"       : "ChAoS_UnItY, shadowfacts",
+                "Specification-Version"      : "1",
+                "Implementation-Title"       : project.name,
+                "Implementation-Version"     : project.version,
+                "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
+                "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "FMLCorePlugin"              : "io.github.chaos.forgelin.preloader.ForgelinPlugin",
                 "FMLCorePluginContainsFMLMod": "true"
         ])
     }
@@ -104,17 +103,18 @@ shadowJar {
         include(dependency("org.jetbrains:annotations:${annotations_version}"))
         include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
         include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_serialization_version}"))
     }
     manifest {
         attributes([
-                "Specification-Title"     : "forgelin",
-                "Specification-Vendor"    : "ChAoS_UnItY, shadowfacts",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.version,
-                "Implementation-Vendor"   : "ChAoS_UnItY, shadowfacts",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "FMLCorePlugin": "io.github.chaos.forgelin.preloader.ForgelinPlugin",
+                "Specification-Title"        : "forgelin",
+                "Specification-Vendor"       : "ChAoS_UnItY, shadowfacts",
+                "Specification-Version"      : "1",
+                "Implementation-Title"       : project.name,
+                "Implementation-Version"     : project.version,
+                "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
+                "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "FMLCorePlugin"              : "io.github.chaos.forgelin.preloader.ForgelinPlugin",
                 "FMLCorePluginContainsFMLMod": "true"
         ])
     }
@@ -125,5 +125,13 @@ tasks.build.dependsOn shadowJar
 artifacts {
     archives shadowJar
 }
+
+reobf {
+    shadowJar {
+    }
+}
+
+tasks.reobfShadowJar.mustRunAfter shadowJar
+tasks.build.dependsOn reobfShadowJar
 
 jar.finalizedBy('reobfJar')

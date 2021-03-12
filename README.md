@@ -19,4 +19,4 @@ dependencies {
 }
 ```
 
-Latest version can be seen at [Release]()
+Latest version can be seen at [Release](https://github.com/ChAoSUnItY/Forgelin/releases).
