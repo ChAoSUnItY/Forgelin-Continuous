@@ -1,5 +1,5 @@
 # Forgelin
-[![](https://jitpack.io/v/ChAoSUnItY/Forgelin-Continuous.svg)](https://jitpack.io/#ChAoSUnItY/Forgelin-Continuous)
+[![](https://jitpack.io/v/ChAoSUnItY/Forgelin-Continuous.svg)](https://jitpack.io/#ChAoSUnItY/Forgelin-Continuous)  
 Fork of [Shadowfacts's Forgelin](https://github.com/shadowfacts/Forgelin)
 ## Addition
 This mod shades:
@@ -26,3 +26,17 @@ dependencies {
 ```
 
 Latest file id can be seen [here](https://www.curseforge.com/minecraft/mc-mods/forgelin-continuous/files).
+
+Add this line to your mod annotation then you're done with basic settings!
+
+```kotlin
+@Mod(
+  modid = "modid",
+  name = "Mod Name",
+  version = "Mod version",
+  modLanguageAdapter = "io.github.chaosunity.forgelin.KotlinAdapter"
+)
+object ExampleMod {
+    // ...
+}
+```
