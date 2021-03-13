@@ -17,7 +17,7 @@ public class ForgelinPlugin implements IFMLLoadingPlugin {
 
     @Override
     public String getSetupClass() {
-        return "io.github.chaos.forgelin.preloader.ForgelinSetup";
+        return "io.github.chaosunity.forgelin.preloader.ForgelinSetup";
     }
 
     @Override

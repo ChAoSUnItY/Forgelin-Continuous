@@ -9,7 +9,7 @@ public class ForgelinSetup implements IFMLCallHook {
     public void injectData(Map<String, Object> data) {
         ClassLoader loader = (ClassLoader) data.get("classLoader");
         try {
-            loader.loadClass("net.shadowfacts.forgelin.KotlinAdapter");
+            loader.loadClass("io.github.chaosunity.forgelin.KotlinAdapter");
         } catch (ClassNotFoundException e) {
             // this should never happen
             throw new RuntimeException("Couldn't find Forgelin langague adapter, this shouldn't be happening", e);

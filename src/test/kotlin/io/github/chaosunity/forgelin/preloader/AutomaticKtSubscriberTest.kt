@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @Mod(
     modid = AutomaticKtSubscriberTest.MOD_ID,
-    modLanguageAdapter = "io.github.chaos.forgelin.KotlinAdapter"
+    modLanguageAdapter = "io.github.chaosunity.forgelin.KotlinAdapter"
 )
 object AutomaticKtSubscriberTest {
     const val MOD_ID = "ktsubtest"

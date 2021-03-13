@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "maven-publish"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -87,7 +88,7 @@ jar {
                 "Implementation-Version"     : project.version,
                 "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
                 "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "FMLCorePlugin"              : "io.github.chaos.forgelin.preloader.ForgelinPlugin",
+                "FMLCorePlugin"              : "io.github.chaosunity.forgelin.preloader.ForgelinPlugin",
                 "FMLCorePluginContainsFMLMod": "true"
         ])
     }
@@ -114,7 +115,7 @@ shadowJar {
                 "Implementation-Version"     : project.version,
                 "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
                 "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "FMLCorePlugin"              : "io.github.chaos.forgelin.preloader.ForgelinPlugin",
+                "FMLCorePlugin"              : "io.github.chaosunity.forgelin.preloader.ForgelinPlugin",
                 "FMLCorePluginContainsFMLMod": "true"
         ])
     }
