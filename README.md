@@ -1,4 +1,5 @@
 # Forgelin
+[![](https://jitpack.io/v/ChAoSUnItY/Forgelin-Continuous.svg)](https://jitpack.io/#ChAoSUnItY/Forgelin-Continuous)
 Fork of [Shadowfacts's Forgelin](https://github.com/shadowfacts/Forgelin)
 ## Addition
 This mod shades:
@@ -11,12 +12,17 @@ This mod shades:
 ## Usages
 ```groovy
 repositories {
-    maven { url 'https://jitpack.io' }
+  maven {
+    url "https://www.cursemaven.com"
+    content {
+      includeGroup "curse.maven"
+    }
+  }
 }
 
 dependencies {
-  compile 'com.github.ChAoSUnItY:Forgelin:LATEST_VERSION'
+  compile "curse.maven:forgelin-continuous-456403:LATEST_FILE_ID"
 }
 ```
 
-Latest version can be seen at [Release](https://github.com/ChAoSUnItY/Forgelin/releases).
+Latest file id can be seen [here](https://www.curseforge.com/minecraft/mc-mods/forgelin-continuous/files).
