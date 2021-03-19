@@ -9,12 +9,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
     modid = Forgelin.MOD_ID,
     name = Forgelin.MOD_NAME,
     version = Forgelin.MOD_VERSION,
-    modLanguageAdapter = "io.github.chaosunity.forgelin.KotlinAdapter"
+    modLanguageAdapter = Forgelin.ADAPTER
 )
 object Forgelin {
+    /**
+     *  Testing feature, use this at your risk.
+     */
+    const val ADAPTER = "io.github.chaosunity.forgelin.KotlinAdapter"
+
     const val MOD_ID = "forgelin_continuous"
     const val MOD_NAME = "Forgelin Continuous"
-    const val MOD_VERSION = "1.4.30.2"
+    const val MOD_VERSION = "1.4.30.3"
 
     @Mod.EventHandler
     fun onPreInit(event: FMLPreInitializationEvent) {
