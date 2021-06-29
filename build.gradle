@@ -1,0 +1,137 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
+        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: kotlin_version
+    }
+}
+
+plugins {
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'kotlin'
+
+group = 'io.github.chaosunity.forgelin'
+version = '1.5.20.0'
+archivesBaseName = 'Forgelin-Continuous'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                forgelin {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                forgelin {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk7", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-reflect", version: kotlin_version
+    compile group: "org.jetbrains", name: "annotations", version: annotations_version
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-serialization-json", version: json_serialization_version
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"        : "forgelin",
+                "Specification-Vendor"       : "ChAoS_UnItY, shadowfacts",
+                "Specification-Version"      : "1",
+                "Implementation-Title"       : project.name,
+                "Implementation-Version"     : project.version,
+                "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
+                "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "FMLCorePlugin"              : "io.github.chaosunity.forgelin.preloader.ForgelinPlugin",
+                "FMLCorePluginContainsFMLMod": "true"
+        ])
+    }
+}
+
+shadowJar {
+    classifier = ""
+    dependencies {
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"))
+        include(dependency("org.jetbrains:annotations:${annotations_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_serialization_version}"))
+    }
+    manifest {
+        attributes([
+                "Specification-Title"        : "forgelin",
+                "Specification-Vendor"       : "ChAoS_UnItY, shadowfacts",
+                "Specification-Version"      : "1",
+                "Implementation-Title"       : project.name,
+                "Implementation-Version"     : project.version,
+                "Implementation-Vendor"      : "ChAoS_UnItY, shadowfacts",
+                "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "FMLCorePlugin"              : "io.github.chaosunity.forgelin.preloader.ForgelinPlugin",
+                "FMLCorePluginContainsFMLMod": "true"
+        ])
+    }
+}
+
+tasks.build.dependsOn shadowJar
+
+artifacts {
+    archives shadowJar
+}
+
+reobf {
+    shadowJar {
+    }
+}
+
+tasks.reobfShadowJar.mustRunAfter shadowJar
+tasks.build.dependsOn reobfShadowJar
+
+jar.finalizedBy('reobfJar')
