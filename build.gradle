@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'kotlin'
 
 group = 'io.github.chaosunity'
-version = '1.6.21.0'
+version = "$kotlin_version.$sub_version"
 archivesBaseName = 'Forgelin-Continuous'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -72,9 +72,13 @@ dependencies {
     compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: kotlin_version
     compile group: "org.jetbrains.kotlin", name: "kotlin-reflect", version: kotlin_version
     compile group: "org.jetbrains", name: "annotations", version: annotations_version
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-serialization-json", version: json_serialization_version
+    if (!no_coroutines.toBoolean()) {
+        compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
+        compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
+    }
+    if (!no_json_serialization.toBoolean()) {
+        compile group: "org.jetbrains.kotlinx", name: "kotlinx-serialization-json", version: json_serialization_version
+    }
 }
 
 jar {
@@ -101,9 +105,13 @@ shadowJar {
         include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"))
         include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"))
         include(dependency("org.jetbrains:annotations:${annotations_version}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_serialization_version}"))
+        if (!no_coroutines.toBoolean()) {
+            include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
+        }
+        if (!no_json_serialization.toBoolean()) {
+            include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_serialization_version}"))
+        }
     }
     manifest {
         attributes([
