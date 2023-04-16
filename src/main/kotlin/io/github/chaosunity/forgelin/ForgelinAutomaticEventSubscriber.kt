@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.LogManager
 import java.lang.reflect.Modifier
-import java.util.EnumSet
+import java.util.*
 import kotlin.reflect.full.companionObjectInstance
 
 object ForgelinAutomaticEventSubscriber {
@@ -35,7 +35,10 @@ object ForgelinAutomaticEventSubscriber {
         for (containedMod in containedMods) {
             val containedModId = containedMod.annotationInfo["modid"] as String
             if (containedMod.annotationInfo["modLanguageAdapter"] != KotlinAdapter::class.qualifiedName) {
-                LOGGER.debug("Skipping @EventBusSubscriber injection for {} since it does not use KotlinAdapter", containedModId)
+                LOGGER.debug(
+                    "Skipping @EventBusSubscriber injection for {} since it does not use KotlinAdapter",
+                    containedModId
+                )
                 continue
             }
 
@@ -45,12 +48,20 @@ object ForgelinAutomaticEventSubscriber {
                 try {
                     val ownerModId = parseModId(containedMods, subscriber)
                     if (ownerModId.isNullOrEmpty()) {
-                        LOGGER.debug("Could not determine owning mod for @EventBusSubscriber on {} for mod {}", subscriber.className, mod.modId)
+                        LOGGER.debug(
+                            "Could not determine owning mod for @EventBusSubscriber on {} for mod {}",
+                            subscriber.className,
+                            mod.modId
+                        )
                         continue
                     }
 
                     if (containedModId != ownerModId) {
-                        LOGGER.debug("Skipping @EventBusSubscriber injection for {} since it is not for mod {}", subscriber.className, containedModId)
+                        LOGGER.debug(
+                            "Skipping @EventBusSubscriber injection for {} since it is not for mod {}",
+                            subscriber.className,
+                            containedModId
+                        )
                         continue
                     }
 
@@ -70,7 +81,11 @@ object ForgelinAutomaticEventSubscriber {
                     }
 
                 } catch (e: Throwable) {
-                    LOGGER.error("An error occurred trying to load an @EventBusSubscriber object {} for modid {}", mod.modId, e)
+                    LOGGER.error(
+                        "An error occurred trying to load an @EventBusSubscriber object {} for modid {}",
+                        mod.modId,
+                        e
+                    )
                     throw LoaderException(e)
                 }
             }
@@ -98,6 +113,7 @@ object ForgelinAutomaticEventSubscriber {
         return ASMDataTable.getOwnerModID(containedMods, subscriber)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun parseTargetSides(subscriber: ASMData): EnumSet<Side> {
         val parsedSides: List<EnumHolder>? = subscriber.annotationInfo["value"] as? List<EnumHolder>
         if (parsedSides != null) {

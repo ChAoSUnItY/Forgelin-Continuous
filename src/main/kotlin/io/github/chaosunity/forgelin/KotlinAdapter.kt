@@ -18,7 +18,7 @@ class KotlinAdapter : ILanguageAdapter {
         factoryMarkedAnnotation: Method?
     ): Any {
         log.debug("FML has asked for ${objectClass.simpleName} to be constructed")
-        return objectClass.kotlin.objectInstance ?: objectClass.newInstance()
+        return objectClass.kotlin.objectInstance ?: objectClass.getDeclaredConstructor().newInstance()
     }
 
     override fun supportsStatics(): Boolean =
