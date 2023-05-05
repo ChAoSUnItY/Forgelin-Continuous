@@ -23,13 +23,13 @@ buildscript {
         classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+") {
             isChanging = true
         }
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
     }
 }
 
 plugins {
     java
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.20"
     id("net.kyori.blossom") version "1.3.1"
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
