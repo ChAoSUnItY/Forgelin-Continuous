@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  compile "curse.maven:forgelin-continuous-456403:LATEST_FILE_ID"
+  implementation "curse.maven:forgelin-continuous-456403:LATEST_FILE_ID"
 }
 ```
 
