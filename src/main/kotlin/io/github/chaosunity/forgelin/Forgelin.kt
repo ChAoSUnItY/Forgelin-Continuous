@@ -19,7 +19,7 @@ object Forgelin {
 
     const val MOD_ID = "forgelin_continuous"
     const val MOD_NAME = "Forgelin Continuous"
-    const val MOD_VERSION = "1.5.30.0"
+    const val MOD_VERSION = "@version@"
 
     @Mod.EventHandler
     fun onPreInit(event: FMLPreInitializationEvent) {

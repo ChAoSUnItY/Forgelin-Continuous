@@ -63,7 +63,7 @@ dependencies {
 }
 
 blossom {
-    replaceTokenIn("src/main/kotlin/net/shadowfacts/forgelin/Forgelin.kt")
+    replaceTokenIn("src/main/kotlin/io/github/chaosunity/forgelin/Forgelin.kt")
     replaceToken("@version@", "$kotlinVersion.$subVersion")
 }
 
