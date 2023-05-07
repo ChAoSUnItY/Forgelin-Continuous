@@ -43,7 +43,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
 configure<UserDevExtension> {
-    mappings(mcpChannel,  mcpVersion)
+    mappings(mcpChannel, mcpVersion)
 }
 
 val minecraft by configurations
@@ -68,7 +68,6 @@ blossom {
 }
 
 tasks {
-
     shadowJar {
         archiveBaseName.set(modName)
         archiveClassifier.set("")
@@ -88,22 +87,21 @@ tasks {
     processResources {
         filesMatching("mcmod.info") {
             expand(
-                    "version" to "$kotlinVersion.$subVersion",
-                    "mcversion" to mcVersion,
-                    "modname" to modName,
-                    "modid" to modName.toLowerCase(),
-                    "modname" to modName,
-                    "link" to repositoryLink,
-                    "description" to modDescription
+                "version" to "$kotlinVersion.$subVersion",
+                "mcversion" to mcVersion,
+                "modname" to modName,
+                "modid" to modName.toLowerCase(),
+                "modname" to modName,
+                "link" to repositoryLink,
+                "description" to modDescription
             )
         }
     }
 
     jar {
         manifest.attributes(
-                "FMLCorePluginContainsFMLMod" to "true",
-                "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
+            "FMLCorePluginContainsFMLMod" to "true",
+            "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
         )
     }
-
 }
