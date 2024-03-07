@@ -32,6 +32,7 @@ plugins {
     kotlin("jvm") version "1.9.22"
     id("net.kyori.blossom") version "1.3.1"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    `maven-publish`
 }
 
 apply(plugin = "net.minecraftforge.gradle")
@@ -47,6 +48,14 @@ configure<UserDevExtension> {
 }
 
 val minecraft by configurations
+
+repositories {
+    maven {
+        name = "CleanroomMC Maven"
+        url = uri("https://maven.cleanroommc.com")
+    }
+    mavenLocal()
+}
 
 dependencies {
     minecraft("net.minecraftforge:forge:$forgeVersion")
@@ -103,5 +112,26 @@ tasks {
             "FMLCorePluginContainsFMLMod" to "true",
             "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
         )
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = modGroup
+            artifactId = modName
+            version = "$kotlinVersion.$subVersion"
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            name = "CleanroomMaven"
+            url = uri("https://repo.cleanroommc.com/releases")
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
     }
 }
