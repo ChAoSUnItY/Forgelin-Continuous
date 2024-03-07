@@ -1,5 +1,6 @@
-# Forgelin
-[![](https://jitpack.io/v/ChAoSUnItY/Forgelin-Continuous.svg)](https://jitpack.io/#ChAoSUnItY/Forgelin-Continuous)  
+# Forgelin Continuous
+[![](https://repo.cleanroommc.com/api/badge/latest/releases/io/github/chaosunity/forgelin/Forgelin-Continuous?color=40c14a&name=Forgelin-Continuous)](https://repo.cleanroommc.com/#/releases/io/github/chaosunity/forgelin/Forgelin-Continuous)  
+
 Fork of [Shadowfacts's Forgelin](https://github.com/shadowfacts/Forgelin)
 ## Addition
 This mod shades:
