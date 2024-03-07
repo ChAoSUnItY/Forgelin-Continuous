@@ -9,23 +9,36 @@ This mod shades:
 - Coroutine
 - Serialization
   - Json Only
+
+The list of version of bundled libraries is listed in [GitHub Release](https://github.com/ChAoSUnItY/Forgelin-Continuous/releases).
+
 ## Usages
+### For Gradle Groovy:
 ```groovy
 repositories {
-  maven {
-    url "https://www.cursemaven.com"
-    content {
-      includeGroup "curse.maven"
+  repositories {
+    maven {
+      url 'https://maven.cleanroommc.com'
     }
   }
 }
 
 dependencies {
-  implementation "curse.maven:forgelin-continuous-456403:LATEST_FILE_ID"
+  implementation 'io.github.chaosunity.forgelin:Forgelin-Continuous:1.9.23.0'
 }
 ```
+### For Gradle Kotlin
+```kts
+repositories {
+    maven {
+        url = uri("https://maven.cleanroommc.com")
+    }
+}
 
-Latest file id can be seen [here](https://www.curseforge.com/minecraft/mc-mods/forgelin-continuous/files).
+dependencies {
+  implementation("io.github.chaosunity.forgelin:Forgelin-Continuous:1.9.23.0")
+}
+```
 
 Add this line to your mod annotation then you're done with basic settings!
 
