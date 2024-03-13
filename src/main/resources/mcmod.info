@@ -6,11 +6,23 @@
     "mcversion": "$mcversion",
     "description": "$description",
     "url": "$link",
-    "authorList": ["ChAoS_UnItY", "shadowfacts", "teksturepako"],
+    "authorList": ["ChAoS_UnItY"],
     "updateUrl": "",
-    "credits": "",
+    "credits": "Emberwalker, for the original Forgelin, Shadowfacts, for the rework Forgelin known as Shadowfacts' Forgelin.",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []
+  },
+  {
+    "modid": "forgelin",
+    "name": "Shadowfacts' Forgelin (Dummy)",
+    "version": "$version",
+    "mcversion": "$mcversion",
+    "description": "Kotlin helper library for Forge. This forgelin is runtime generated and it serves no additional purpose, only to be compatible with old mods that depends on Shadowfacts' Forgelin.",
+    "credits": "Emberwalker, for the original Forgelin",
+    "url": "https://github.com/shadowfacts/Forgelin",
+    "updateUrl": "",
+    "authorList": ["shadowfacts"],
+    "screenshots": []
   }
 ]

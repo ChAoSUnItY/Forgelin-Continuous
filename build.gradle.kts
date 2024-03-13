@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.minecraftforge.gradle.userdev.UserDevExtension
 
 val modName: String by ext.properties
@@ -76,42 +77,42 @@ blossom {
     replaceToken("@version@", "$kotlinVersion.$subVersion")
 }
 
-tasks {
-    shadowJar {
-        archiveBaseName.set(modName)
-        archiveClassifier.set("")
-        archiveVersion.set("$kotlinVersion.$subVersion")
-        configurations = listOf(project.configurations.shadow.get())
+tasks.withType<ShadowJar> {
+    archiveBaseName.set(modName)
+    archiveClassifier.set("")
+    archiveVersion.set("$kotlinVersion.$subVersion")
+    configurations = listOf(project.configurations.shadow.get())
 
-        exclude("module-info.class", "META-INF/maven/**", "META-INF/proguard/**", "META-INF/versions/**")
+    exclude("module-info.class", "META-INF/maven/**", "META-INF/proguard/**", "META-INF/versions/**")
 
-        finalizedBy("reobfJar")
+    finalizedBy("reobfJar")
+}
+
+tasks.withType<ProcessResources> {
+    filesMatching("mcmod.info") {
+        expand(
+            "version" to "$kotlinVersion.$subVersion",
+            "mcversion" to mcVersion,
+            "modname" to modName,
+            "modid" to modName.toLowerCase().replace('-', '_'),
+            "modname" to modName,
+            "link" to repositoryLink,
+            "description" to modDescription
+        )
     }
+}
 
+tasks.withType<Jar> {
+    manifest.attributes(
+        "FMLCorePluginContainsFMLMod" to "true",
+        "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
+    )
+}
+
+tasks {
     artifacts {
         archives(shadowJar)
         shadow(shadowJar)
-    }
-
-    processResources {
-        filesMatching("mcmod.info") {
-            expand(
-                "version" to "$kotlinVersion.$subVersion",
-                "mcversion" to mcVersion,
-                "modname" to modName,
-                "modid" to modName.toLowerCase(),
-                "modname" to modName,
-                "link" to repositoryLink,
-                "description" to modDescription
-            )
-        }
-    }
-
-    jar {
-        manifest.attributes(
-            "FMLCorePluginContainsFMLMod" to "true",
-            "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
-        )
     }
 }
 
