@@ -1,9 +1,9 @@
-package io.github.chaosunity.forgelin
+package net.shadowfacts.forgelin
 
+import io.github.chaosunity.forgelin.ForgelinAutomaticEventSubscriber
 import net.minecraftforge.fml.common.*
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.versioning.ArtifactVersion
-import org.apache.logging.log4j.LogManager
 
 @Mod(
     modid = Forgelin.MOD_ID,
@@ -12,12 +12,10 @@ import org.apache.logging.log4j.LogManager
     modLanguageAdapter = Forgelin.ADAPTER
 )
 object Forgelin {
-    val LOGGER = LogManager.getLogger("Forgelin-Continuous")
-
-    const val MOD_ID = "forgelin_continuous"
-    const val MOD_NAME = "Forgelin Continuous"
-    const val MOD_VERSION = "@version@"
-    const val ADAPTER = "io.github.chaosunity.forgelin.KotlinAdapter"
+    const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
+    const val MOD_ID = "forgelin"
+    const val MOD_NAME = "Shadowfacts' Forgelin (Bundled)"
+    const val MOD_VERSION = "1.8.4"
 
     @Mod.EventHandler
     fun onPreInit(event: FMLPreInitializationEvent) {

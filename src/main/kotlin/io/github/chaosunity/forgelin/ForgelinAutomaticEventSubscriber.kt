@@ -14,10 +14,12 @@ import org.apache.logging.log4j.LogManager
 import java.lang.reflect.Modifier
 import java.util.*
 import kotlin.reflect.full.companionObjectInstance
+import net.shadowfacts.forgelin.KotlinAdapter as ShadowFactKtAdapter
 
 object ForgelinAutomaticEventSubscriber {
     private val DEFAULT_SUBSCRIPTION_SIDES = EnumSet.allOf(Side::class.java)
     private val LOGGER = LogManager.getLogger(ForgelinAutomaticEventSubscriber::class.java)
+    private val AVAILABLE_KT_ADAPTERS = arrayOf(KotlinAdapter::class.qualifiedName, ShadowFactKtAdapter::class.qualifiedName)
 
     private val unregistered = mutableSetOf<Class<*>>()
     private val registered = mutableSetOf<Any>()
@@ -34,7 +36,7 @@ object ForgelinAutomaticEventSubscriber {
 
         for (containedMod in containedMods) {
             val containedModId = containedMod.annotationInfo["modid"] as String
-            if (containedMod.annotationInfo["modLanguageAdapter"] != KotlinAdapter::class.qualifiedName) {
+            if (!AVAILABLE_KT_ADAPTERS.contains(containedMod.annotationInfo["modLanguageAdapter"])) {
                 LOGGER.debug(
                     "Skipping @EventBusSubscriber injection for {} since it does not use KotlinAdapter",
                     containedModId
