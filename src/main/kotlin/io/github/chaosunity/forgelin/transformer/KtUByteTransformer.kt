@@ -6,9 +6,8 @@ import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.ClassNode
 
 object KtUByteTransformer: Transformer {
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun getTarget(): String =
-        UByteArray::class.qualifiedName!!
+        "kotlin.UByteArray"
     
     override fun transform(originalClass: ByteArray): ByteArray {
         val cr = ClassReader(originalClass)

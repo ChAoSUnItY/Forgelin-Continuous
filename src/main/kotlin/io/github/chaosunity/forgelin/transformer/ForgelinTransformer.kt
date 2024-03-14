@@ -18,7 +18,8 @@ class ForgelinTransformer : IClassTransformer {
 
     init {
         LOGGER.info("Begin register to-be-transformed classes")
-        addTransformation(KtUByteTransformer::class)
+        // addTransformation(KtUByteTransformer::class)
+        LOGGER.info("Skipping registration...")
         LOGGER.info("Registration for transformation is completed")
     }
 
@@ -27,14 +28,11 @@ class ForgelinTransformer : IClassTransformer {
         
         // LOGGER.info("Transforming class (`${p1}` => obf: `${p0}`)...")
         
-        if (p1.startsWith("kotlin")) {
-            LOGGER.info("Transforming class (`${p1}` => obf: `${p0}`)...")
-            LOGGER.info(transformations)
-        }
-        
         var transformedBytes = p2
         
         for (transformation in transformations) {
+            LOGGER.info("Transforming...")
+            
             transformedBytes = transformation(transformedBytes)
         }
         
