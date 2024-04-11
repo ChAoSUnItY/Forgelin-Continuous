@@ -23,12 +23,12 @@ class ForgelinTransformer : IClassTransformer {
         LOGGER.info("Registration for transformation is completed")
     }
 
-    override fun transform(p0: String, p1: String, p2: ByteArray): ByteArray {
+    override fun transform(p0: String, p1: String, p2: ByteArray?): ByteArray? {
         val transformations = transformers.get(p1)
         
         // LOGGER.info("Transforming class (`${p1}` => obf: `${p0}`)...")
         
-        var transformedBytes = p2
+        var transformedBytes = p2 ?: return null
         
         for (transformation in transformations) {
             LOGGER.info("Transforming...")
