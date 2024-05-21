@@ -30,7 +30,7 @@ buildscript {
 
 plugins {
     java
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "1.9.24"
     id("net.kyori.blossom") version "1.3.1"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     `maven-publish`
