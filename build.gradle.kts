@@ -1,54 +1,68 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import net.minecraftforge.gradle.userdev.UserDevExtension
+import org.jetbrains.gradle.ext.Gradle
+import org.jetbrains.gradle.ext.compiler
+import org.jetbrains.gradle.ext.runConfigurations
+import org.jetbrains.gradle.ext.settings
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val modName: String by ext.properties
+val modId: String by ext.properties
 val modGroup: String by ext.properties
 val subVersion: String by ext.properties
-val mcVersion: String by ext.properties
-val mcpChannel: String by ext.properties
-val mcpVersion: String by ext.properties
-val forgeVersion: String by ext.properties
 val repositoryLink: String by ext.properties
-val kotlinVersion: String by ext.properties
-val annotationsVersion: String by ext.properties
-val coroutinesVersion: String by ext.properties
-val serializationVersion: String by ext.properties
+val kotlinVersion: String = libs.versions.kotlinVersion.get()
+val annotationsVersion: String = libs.versions.annotationsVersion.get()
+val coroutinesVersion: String = libs.versions.coroutinesVersion.get()
+val serializationVersion: String = libs.versions.serializationVersion.get()
 val modDescription: String by ext.properties
 
 buildscript {
     repositories {
         mavenCentral()
-        maven(url = "https://maven.minecraftforge.net/")
     }
     dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+") {
-            isChanging = true
-        }
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlinVersion}")
     }
 }
 
 plugins {
     java
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version libs.versions.kotlinVersion
     id("net.kyori.blossom") version "1.3.1"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.gtnewhorizons.retrofuturagradle") version "1.3.27"
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.7"
     `maven-publish`
 }
-
-apply(plugin = "net.minecraftforge.gradle")
 
 version = "$kotlinVersion.$subVersion"
 group = modGroup
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+        vendor.set(JvmVendorSpec.AZUL)
+    }
 
-configure<UserDevExtension> {
-    mappings(mcpChannel, mcpVersion)
+    withSourcesJar()
 }
 
-val minecraft by configurations
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
+    }
+}
+
+minecraft {
+    mcVersion.set("1.12.2")
+
+    // MCP Mappings
+    mcpMappingChannel.set("stable")
+    mcpMappingVersion.set("39")
+
+    // Set username here, the UUID will be looked up automatically
+    username.set("Developer")
+}
 
 repositories {
     maven {
@@ -59,12 +73,11 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:$forgeVersion")
-
     shadow("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     shadow("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
     shadow("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     shadow("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     shadow("org.jetbrains:annotations:$annotationsVersion")
     shadow("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     shadow("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
@@ -85,16 +98,21 @@ tasks.withType<ShadowJar> {
 
     exclude("module-info.class", "META-INF/maven/**", "META-INF/proguard/**", "META-INF/versions/**")
 
+    manifest.attributes(
+
+    )
+
     finalizedBy("reobfJar")
 }
 
+@Suppress("UnstableApiUsage")
 tasks.withType<ProcessResources> {
     filesMatching("mcmod.info") {
         expand(
             "version" to "$kotlinVersion.$subVersion",
-            "mcversion" to mcVersion,
+            "mcversion" to "1.12.2",
             "modname" to modName,
-            "modid" to modName.toLowerCase().replace('-', '_'),
+            "modid" to modId,
             "modname" to modName,
             "link" to repositoryLink,
             "description" to modDescription
@@ -113,6 +131,38 @@ tasks {
     artifacts {
         archives(shadowJar)
         shadow(shadowJar)
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+    project {
+        settings {
+            runConfigurations {
+                add(Gradle("1. Run Client").apply {
+                    setProperty("taskNames", listOf("runClient"))
+                })
+                add(Gradle("2. Run Server").apply {
+                    setProperty("taskNames", listOf("runServer"))
+                })
+                add(Gradle("3. Run Obfuscated Client").apply {
+                    setProperty("taskNames", listOf("runObfClient"))
+                })
+                add(Gradle("4. Run Obfuscated Server").apply {
+                    setProperty("taskNames", listOf("runObfServer"))
+                })
+            }
+            compiler.javac {
+                afterEvaluate {
+                    javacAdditionalOptions = "-encoding utf8"
+                    moduleJavacAdditionalOptions = mutableMapOf(
+                        (project.name + ".main") to tasks.compileJava.get().options.compilerArgs.joinToString(" ") { "\"$it\"" }
+                    )
+                }
+            }
+        }
     }
 }
 
