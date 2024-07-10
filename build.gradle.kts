@@ -15,6 +15,7 @@ val annotationsVersion: String = libs.versions.annotationsVersion.get()
 val coroutinesVersion: String = libs.versions.coroutinesVersion.get()
 val serializationVersion: String = libs.versions.serializationVersion.get()
 val modDescription: String by ext.properties
+val modVersion: String by lazy { "$kotlinVersion.$subVersion" }
 
 buildscript {
     repositories {
@@ -35,7 +36,7 @@ plugins {
     `maven-publish`
 }
 
-version = "$kotlinVersion.$subVersion"
+version = modVersion
 group = modGroup
 
 java {
@@ -43,8 +44,6 @@ java {
         languageVersion.set(JavaLanguageVersion.of(8))
         vendor.set(JvmVendorSpec.AZUL)
     }
-
-    withSourcesJar()
 }
 
 kotlin {
@@ -64,6 +63,12 @@ minecraft {
     username.set("Developer")
 }
 
+val shade: Configuration by configurations.creating
+
+configurations {
+    implementation.get().extendsFrom(shade)
+}
+
 repositories {
     maven {
         name = "CleanroomMC Maven"
@@ -73,34 +78,27 @@ repositories {
 }
 
 dependencies {
-    shadow("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    shadow("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    shadow("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    shadow("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    shadow("org.jetbrains:annotations:$annotationsVersion")
-    shadow("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    shadow("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
-    shadow("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-    shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation("org.jetbrains:annotations:$annotationsVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
 
 blossom {
     replaceTokenIn("src/main/kotlin/io/github/chaosunity/forgelin/Forgelin.kt")
-    replaceToken("@version@", "$kotlinVersion.$subVersion")
+    replaceToken("@version@", modVersion)
 }
 
 tasks.withType<ShadowJar> {
     archiveBaseName.set(modName)
     archiveClassifier.set("")
-    archiveVersion.set("$kotlinVersion.$subVersion")
+    archiveVersion.set(modVersion)
     configurations = listOf(project.configurations.shadow.get())
 
     exclude("module-info.class", "META-INF/maven/**", "META-INF/proguard/**", "META-INF/versions/**")
-
-    manifest.attributes(
-
-    )
 
     finalizedBy("reobfJar")
 }
@@ -109,7 +107,7 @@ tasks.withType<ShadowJar> {
 tasks.withType<ProcessResources> {
     filesMatching("mcmod.info") {
         expand(
-            "version" to "$kotlinVersion.$subVersion",
+            "version" to modVersion,
             "mcversion" to "1.12.2",
             "modname" to modName,
             "modid" to modId,
@@ -121,17 +119,22 @@ tasks.withType<ProcessResources> {
 }
 
 tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
     manifest.attributes(
         "FMLCorePluginContainsFMLMod" to "true",
         "FMLCorePlugin" to "io.github.chaosunity.forgelin.preloader.ForgelinPlugin"
     )
-}
 
-tasks {
-    artifacts {
-        archives(shadowJar)
-        shadow(shadowJar)
-    }
+    from(provider {
+        shade.map {
+            if (it.isDirectory) {
+                it
+            } else {
+                zipTree(it)
+            }
+        }
+    })
 }
 
 idea {
@@ -171,7 +174,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = modGroup
             artifactId = modName
-            version = "$kotlinVersion.$subVersion"
+            version = modVersion
             from(components["java"])
         }
     }
