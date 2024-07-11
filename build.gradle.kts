@@ -78,13 +78,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation("org.jetbrains:annotations:$annotationsVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    shade("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    shade("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    shade("org.jetbrains:annotations:$annotationsVersion")
+    shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    shade("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
+    shade("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
+    shade("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
 
 blossom {
