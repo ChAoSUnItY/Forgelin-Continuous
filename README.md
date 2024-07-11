@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'io.github.chaosunity.forgelin:Forgelin-Continuous:1.9.23.0'
+  implementation 'io.github.chaosunity.forgelin:Forgelin-Continuous:2.0.0.0'
 }
 ```
 ### For Gradle Kotlin
@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-  implementation("io.github.chaosunity.forgelin:Forgelin-Continuous:1.9.23.0")
+  implementation("io.github.chaosunity.forgelin:Forgelin-Continuous:2.0.0.0")
 }
 ```
 
