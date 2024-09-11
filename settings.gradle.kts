@@ -23,10 +23,10 @@ plugins {
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            version("kotlinVersion", "2.0.0")
+            version("kotlinVersion", "2.0.10")
             version("annotationsVersion", "24.1.0")
-            version("coroutinesVersion", "1.9.0-RC")
-            version("serializationVersion", "1.7.0")
+            version("coroutinesVersion", "1.9.0-RC.2")
+            version("serializationVersion", "1.7.1")
         }
     }
 }
