@@ -18,6 +18,14 @@ open class KotlinAdapter : ILanguageAdapter {
         factoryMarkedAnnotation: Method?
     ): Any {
         LOGGER.debug("FML has asked for ${objectClass.simpleName} to be constructed")
+        try {
+            // Ensure the class is initialized so kotlin objectInstance can be
+            // retrieved safely
+            Class.forName(objectClass.name, true, classLoader)
+        } catch (e: AssertionError) {
+            LOGGER.error("FML has failed to construct ${objectClass.simpleName}")
+            throw e
+        }
         return objectClass.kotlin.objectInstance ?: objectClass.getDeclaredConstructor().newInstance()
     }
 
