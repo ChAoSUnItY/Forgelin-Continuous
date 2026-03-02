@@ -2,7 +2,6 @@ package io.github.chaosunity.forgelin
 
 import net.minecraftforge.fml.common.*
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
-import net.minecraftforge.fml.common.versioning.ArtifactVersion
 import org.apache.logging.log4j.LogManager
 
 @Mod(

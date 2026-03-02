@@ -2,7 +2,7 @@
   {
     "modid": "$modid",
     "name": "$modname",
-    "version": "$version",
+    "version": "$modVersion",
     "mcversion": "$mcversion",
     "description": "$description",
     "url": "$link",
@@ -16,7 +16,7 @@
   {
     "modid": "forgelin",
     "name": "Shadowfacts' Forgelin (Dummy)",
-    "version": "$version",
+    "version": "$modVersion",
     "mcversion": "$mcversion",
     "description": "Kotlin helper library for Forge. This forgelin is runtime generated and it serves no additional purpose, only to be compatible with old mods that depends on Shadowfacts' Forgelin.",
     "credits": "Emberwalker, for the original Forgelin",

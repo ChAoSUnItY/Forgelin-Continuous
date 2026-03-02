@@ -103,11 +103,10 @@ tasks.withType<ShadowJar> {
     finalizedBy("reobfJar")
 }
 
-@Suppress("UnstableApiUsage")
 tasks.withType<ProcessResources> {
     filesMatching("mcmod.info") {
         expand(
-            "version" to modVersion,
+            "modVersion" to modVersion,
             "mcversion" to "1.12.2",
             "modname" to modName,
             "modid" to modId,
