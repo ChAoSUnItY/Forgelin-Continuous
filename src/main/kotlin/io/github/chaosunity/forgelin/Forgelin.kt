@@ -8,7 +8,8 @@ import org.apache.logging.log4j.LogManager
     modid = Forgelin.MOD_ID,
     name = Forgelin.MOD_NAME,
     version = Forgelin.MOD_VERSION,
-    modLanguageAdapter = Forgelin.ADAPTER
+    modLanguageAdapter = Forgelin.ADAPTER,
+    acceptableRemoteVersions = "*"
 )
 object Forgelin {
     val LOGGER = LogManager.getLogger("Forgelin-Continuous")
